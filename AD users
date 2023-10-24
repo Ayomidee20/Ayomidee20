@@ -1,0 +1,23 @@
+# Import the Active Directory module
+Import-Module ActiveDirectory
+
+# Get a list of all OUs in the domain
+$ous = Get-ADOrganizationalUnit -Filter * -Properties Name
+
+# Iterate through each OU
+foreach ($ou in $ous) {
+    # Print the OU name
+    Write-Host "OU Name: $($ou.Name)"
+    
+    # Get a list of users in the OU
+    $users = Get-ADUser -Filter * -SearchBase $ou.DistinguishedName
+    
+    # Iterate through each user in the OU
+    foreach ($user in $users) {
+        # Print the user's name
+        Write-Host "User: $($user.Name)"
+    }
+    
+    # Add a line break to separate OUs
+    Write-Host
+}
